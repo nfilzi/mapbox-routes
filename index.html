@@ -145,6 +145,7 @@
         drawRoute(startCoordinates);
 
         // Add starting point to the map
+
         const startPoint = {
           id: 'point',
           type: 'circle',
@@ -165,7 +166,7 @@
           },
           paint: {
             'circle-radius': 10,
-            'circle-color': '#3887be'
+            'circle-color': '#3887be',
           }
         }
 
@@ -173,45 +174,9 @@
 
         // Add end point to the map
 
-        const endPoint = {
-          type: 'FeatureCollection',
-          features: [{
-            type: 'Feature',
-            properties: {},
-            geometry: {
-              type: 'Point',
-              coordinates: endCoordinates
-            }
-          }
-          ]
-        }
-
-        if (map.getLayer('end')) {
-          map.getSource('end').setData(endPoint);
-        } else {
-          map.addLayer({
-            id: 'end',
-            type: 'circle',
-            source: {
-              type: 'geojson',
-              data: {
-                type: 'FeatureCollection',
-                features: [{
-                  type: 'Feature',
-                  properties: {},
-                  geometry: {
-                    type: 'Point',
-                    coordinates: endCoordinates
-                  }
-                }]
-              }
-            },
-            paint: {
-              'circle-radius': 10,
-              'circle-color': '#f30'
-            }
-          });
-        }
+        const startMarker = new mapboxgl.Marker()
+          .setLngLat(endCoordinates)
+          .addTo(map);
 
         drawRoute(endCoordinates);
       })
